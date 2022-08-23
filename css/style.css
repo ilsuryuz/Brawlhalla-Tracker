@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+  
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Helvetica;
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    grid-template-rows: 50px 1fr 30px;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 50px;
+    background-color: #a2cbb6;
+}
+
+nav > div{
+    font-size: 20px;
+    margin: 10px;
+    color: #f3dba8;
+}
+
+nav > div:last-child{
+    margin-left: auto;
+}
+
+nav, footer {
+    /* grid-column: 1 / 3; */
+    /* Does the same thing^^^^ */
+    grid-column: span 2;
+}
+
+#side {
+    background-color: #a2b4da;
+}
+  
+main {
+    background-color: #f3dba8;
+}
+  
+footer {
+    background-color: #a2cbb6;
+}
+
+.flex-ctr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.selection{
+    flex-direction: row;
+    justify-content:stretch;
+}
