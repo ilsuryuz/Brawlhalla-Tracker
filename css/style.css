@@ -35,15 +35,22 @@ nav, footer {
     grid-column: span 2;
 }
 
-#side {
+aside {
+    display: flex;
     background-color: #a2b4da;
 }
   
 main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
     background-color: #f3dba8;
 }
   
 footer {
+    display: flex;
+
     background-color: #a2cbb6;
 }
 
@@ -52,7 +59,25 @@ footer {
     justify-content: center;
     align-items: center;
 }
-.selection{
+  .selection{
+    display: flex;
     flex-direction: row;
-    justify-content:stretch;
-}
+    flex-wrap: wrap;
+    
+    justify-content: center;
+    border-color: #b1fcc8;
+  }
+  .indBox{
+    width: 200px;
+    height: auto;
+    margin: 20px;
+    text-align: center;
+    justify-content: center;
+    background-color: azure;
+    outline: #b1fcc8 solid 10px;
+    border-radius: 25%;
+  }
+  .indBox > img{
+    width: 200px;
+    height: auto;
+  }
