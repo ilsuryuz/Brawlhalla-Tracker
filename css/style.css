@@ -7,15 +7,15 @@ body {
     height: 100vh;
     font-family: Helvetica;
     display: grid;
-    grid-template-columns: 4fr 2fr;
-    grid-template-rows: 50px 1fr 30px;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 75px 1fr 75px;
 }
 
 nav {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    height: 50px;
+    height: 75px;
     background-color: #a2cbb6;
 }
 
@@ -37,6 +37,7 @@ nav, footer {
 
 aside {
     display: flex;
+    justify-content: center;
     background-color: #a2b4da;
 }
   
@@ -63,9 +64,10 @@ footer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
+    margin: 15px;
     justify-content: center;
-    border-color: #b1fcc8;
+    outline: black solid 10px;
+    border-radius: 5%;
   }
   .indBox{
     width: 200px;
@@ -80,4 +82,28 @@ footer {
   .indBox > img{
     width: 200px;
     height: auto;
+  }
+  .side{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: medium;
+  }
+.fullCard{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 75%;
+    text-align: justify;
+    font-size: 30px;
+}
+  .fullCard > img{
+    width: 75%;
+    height: auto;
+  }
+  #description {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: justify;
   }
