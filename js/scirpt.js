@@ -1,7 +1,4 @@
-
-fetch(`https://valorant-api.com/v1/agents/`)
-    .then((data) => data.json())
-    .then((data) => data = data.data).then((data) => AGENTS(data));
+const URL = "https://valorant-api.com/v1/";
 
 
 // Dropdown menu function
@@ -15,7 +12,9 @@ $(document).ready(function () {
     });
 });
 
+
 const $selectionCards = $('.selection')
+$.ajax(URL+ "agents").then((data) => data = data.data).then((data) => AGENTS(data));
 function AGENTS(data) {
     // filter duplicate or error characters
     const filteredData = data.filter(obj => {
@@ -69,10 +68,9 @@ function AGENTS(data) {
 
 }
 
-fetch(`https://valorant-api.com/v1/maps/`)
-    .then((data) => data.json())
-    .then((data) => data = data.data).then((data) => MAPS(data));
+$.ajax(URL+ "maps").then((data) => data = data.data).then((data) => MAPS(data));
 function MAPS(data) {
+    // filters "The Range" map so it does not show up, because not an online map
     const filteredData = data.filter(obj => {
         return obj.displayIcon !== null;
     })
@@ -89,6 +87,40 @@ function MAPS(data) {
             <div id="${data.displayName}Full" class ="fullCard">
             <h2>${data.displayName}</h2>
                 <img src ="${data.splash}"/>
+                <p id="description">${data.coordinates}</p>
+            </div>
+            `;
+
+        $(`#${data.uuid}`).on('click', function () {
+            // console.log("works")
+            // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
+            $("#fullAgent").empty();
+            $("#fullAgent").append(fullCard)
+        })
+    });
+
+}
+
+
+$.ajax(URL+ "weapons").then((data) => data = data.data).then((data) => WEAPONS(data));
+function WEAPONS(data) {
+    // filters "The Range" map so it does not show up, because not an online map
+    // const filteredData = data.filter(obj => {
+    //     return obj.displayIcon !== null;
+    // })
+    data.map((data) => {
+        // console.log(data.displayName)
+        let uuid = data.uuid;
+        const weaponCard = `
+                <div id="${uuid}" class="indBox content-Maps hidden">
+                
+                <h3>${data.displayName}</h3>  
+                </div>`;
+        $selectionCards.append(weaponCard);
+        const fullCard = `
+            <div id="${data.displayName}Full" class ="fullCard">
+            <h2>${data.displayName}</h2>
+                <img src ="${data.displayIcon}"/>
                 <p id="description">${data.coordinates}</p>
             </div>
             `;
