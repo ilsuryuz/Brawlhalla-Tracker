@@ -1,17 +1,19 @@
 
 fetch(`https://valorant-api.com/v1/agents/`)
     .then((data) => data.json())
-    .then((data) => data = data.data).then((data) => AGENTS(data))
+    .then((data) => data = data.data).then((data) => AGENTS(data));
 
 
+// Dropdown menu function
+// ref https://stackoverflow.com/questions/18491179/select-different-options-at-an-select-form-and-show-different-content
 $(document).ready(function(){
         $("#options").change(function(){
-            $(".content").addClass("hidden");
+            $(".indBox").addClass("hidden");
             $(".content-"+$(this).val()).removeClass("hidden");
         });
     });
 
-const $playerCards = $('.selection')
+const $selectionCards = $('.selection')
 function AGENTS(data) {
 
     data.map((data) => {
@@ -24,7 +26,7 @@ function AGENTS(data) {
             <img src="${data.displayIcon}"/>
             <h3>${data.displayName}</h3>  
             </div>`;
-        $playerCards.append(agentCard);
+        $selectionCards.append(agentCard);
         const fullCard = `
         <div id="${data.displayName}Full" class ="fullCard">
         <h2>${data.displayName}</h2>
@@ -61,3 +63,35 @@ function AGENTS(data) {
     });
 
 }
+
+fetch(`https://valorant-api.com/v1/maps/`)
+    .then((data) => data.json())
+    .then((data) => data = data.data).then((data) => MAPS(data));
+    function MAPS(data) {
+    
+        data.map((data) => {
+            // console.log(data.displayName)
+            let uuid = data.uuid;
+            const mapCard = `
+                <div id="${uuid}" class="indBox content-Maps hidden">
+                <img src="${data.displayIcon}"/>
+                <h3>${data.displayName}</h3>  
+                </div>`;
+            $selectionCards.append(mapCard);
+            const fullCard = `
+            <div id="${data.displayName}Full" class ="fullCard">
+            <h2>${data.displayName}</h2>
+                <img src ="${data.splash}"/>
+                <p id="description">${data.coordinates}</p>
+            </div>
+            `;
+    
+            $(`#${data.uuid}`).on('click', function () {
+                // console.log("works")
+                // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
+                $("#fullAgent").empty();
+                $("#fullAgent").append(fullCard)
+            })
+        });
+    
+    }
