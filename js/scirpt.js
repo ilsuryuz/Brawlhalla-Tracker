@@ -3,6 +3,14 @@ fetch(`https://valorant-api.com/v1/agents/`)
     .then((data) => data.json())
     .then((data) => data = data.data).then((data) => AGENTS(data))
 
+
+$(document).ready(function(){
+        $("#options").change(function(){
+            $(".content").addClass("hidden");
+            $(".content-"+$(this).val()).removeClass("hidden");
+        });
+    });
+
 const $playerCards = $('.selection')
 function AGENTS(data) {
 
@@ -10,9 +18,9 @@ function AGENTS(data) {
         // console.log(data.displayName)
         let uuid = data.uuid;
         let abilities = data.abilities;
-        console.log(abilities)
-        const agentCard = `   
-            <div id="${uuid}" class="indBox">
+        // console.log(abilities)
+        const agentCard = `
+            <div id="${uuid}" class="indBox content-Agents hidden">
             <img src="${data.displayIcon}"/>
             <h3>${data.displayName}</h3>  
             </div>`;
@@ -43,7 +51,7 @@ function AGENTS(data) {
             </div>
         </div>
         `;
-        
+
         $(`#${data.uuid}`).on('click', function () {
             // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.

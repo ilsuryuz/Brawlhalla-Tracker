@@ -80,7 +80,7 @@ footer {
     border-radius: 25%;
   }
   .indBox > img{
-    width: 200px;
+    width: 165px;
     height: auto;
   }
   .side{
@@ -118,4 +118,14 @@ footer {
   #abilityDescription> img {
     width: 256px;
     height: auto;
+  }
+
+  select{
+    display: flex;
+    text-align: justify;
+    font-size: 30px;
+    
+  }
+  .hidden{
+    display: none;
   }
