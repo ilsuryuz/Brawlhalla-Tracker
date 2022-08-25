@@ -107,3 +107,15 @@ footer {
     flex-wrap: wrap;
     text-align: justify;
   }
+  #abilities{
+    display: flex;
+    text-align: center;
+  }
+  #abilityDescription{
+    outline: #b1fcc8 solid 10px;
+    margin: 0 15px 0 15px;
+  }
+  #abilityDescription> img {
+    width: 256px;
+    height: auto;
+  }

@@ -22,29 +22,32 @@ function AGENTS(data) {
         <h2>${data.displayName}</h2>
             <img src ="${data.fullPortrait}"/>
             <p id="description">${data.description}</p>
+            <h3>Abilities</h3>
             <div id="abilities">
-                <h3>Abilities</h3>
                 <div title="${abilities[0].description}" id="abilityDescription">
-                    <h4>${abilities[0].displayName}</h4>
+                    <h5>${abilities[0].displayName}</h5>
                     <img src ="${abilities[0].displayIcon}"/>
                     </div>
-                <div title="${abilities[1].description} id="abilityDescription">
-                ${abilities[1].displayName}
-                    <img src ="${abilities[1].displayIcon}"/>
+                <div title="${abilities[1].description}" id="abilityDescription">
+                    <h5>${abilities[1].displayName}</h5>
+                    <img src ="${abilities[1].displayIcon}""/>
                     </div>
-                <div title="${abilities[2].description} id="abilityDescription">
-                ${abilities[2].displayName}
+                <div title="${abilities[2].description}" id="abilityDescription">
+                    <h5>${abilities[2].displayName}</h5>
                     <img src ="${abilities[2].displayIcon}"/>
                     </div>
-                <div title="${abilities[3].description} id="abilityDescription">
-                ${abilities[3].displayName}
+                <div title="${abilities[3].description}" id="abilityDescription">
+                    <h5>${abilities[3].displayName}</h5>
                     <img src ="${abilities[3].displayIcon}"/>
                     </div>
             </div>
         </div>
         `;
+        
         $(`#${data.uuid}`).on('click', function () {
-            console.log("works")
+            // console.log("works")
+            // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
+            $("#fullAgent").empty();
             $("#fullAgent").append(fullCard)
         })
     });
