@@ -6,17 +6,22 @@ fetch(`https://valorant-api.com/v1/agents/`)
 
 // Dropdown menu function
 // ref https://stackoverflow.com/questions/18491179/select-different-options-at-an-select-form-and-show-different-content
-$(document).ready(function(){
-        $("#options").change(function(){
-            $(".indBox").addClass("hidden");
-            $(".content-"+$(this).val()).removeClass("hidden");
-        });
+$(document).ready(function () {
+    $("#options").change(function () {
+        $("#fullAgent").empty();
+        $(".indBox").addClass("hidden");
+        $(".content-" + $(this).val()).removeClass("hidden");
+
     });
+});
 
 const $selectionCards = $('.selection')
 function AGENTS(data) {
-
-    data.map((data) => {
+    // filter duplicate or error characters
+    const filteredData = data.filter(obj => {
+        return obj.isPlayableCharacter === true;
+    })
+    filteredData.map((data) => {
         // console.log(data.displayName)
         let uuid = data.uuid;
         let abilities = data.abilities;
@@ -67,31 +72,33 @@ function AGENTS(data) {
 fetch(`https://valorant-api.com/v1/maps/`)
     .then((data) => data.json())
     .then((data) => data = data.data).then((data) => MAPS(data));
-    function MAPS(data) {
-    
-        data.map((data) => {
-            // console.log(data.displayName)
-            let uuid = data.uuid;
-            const mapCard = `
+function MAPS(data) {
+    const filteredData = data.filter(obj => {
+        return obj.displayIcon !== null;
+    })
+    filteredData.map((data) => {
+        // console.log(data.displayName)
+        let uuid = data.uuid;
+        const mapCard = `
                 <div id="${uuid}" class="indBox content-Maps hidden">
                 <img src="${data.displayIcon}"/>
                 <h3>${data.displayName}</h3>  
                 </div>`;
-            $selectionCards.append(mapCard);
-            const fullCard = `
+        $selectionCards.append(mapCard);
+        const fullCard = `
             <div id="${data.displayName}Full" class ="fullCard">
             <h2>${data.displayName}</h2>
                 <img src ="${data.splash}"/>
                 <p id="description">${data.coordinates}</p>
             </div>
             `;
-    
-            $(`#${data.uuid}`).on('click', function () {
-                // console.log("works")
-                // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
-                $("#fullAgent").empty();
-                $("#fullAgent").append(fullCard)
-            })
-        });
-    
-    }
+
+        $(`#${data.uuid}`).on('click', function () {
+            // console.log("works")
+            // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
+            $("#fullAgent").empty();
+            $("#fullAgent").append(fullCard)
+        })
+    });
+
+}
