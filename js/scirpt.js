@@ -15,54 +15,74 @@ $(document).ready(function () {
 
 const $selectionCards = $('.selection')
 $.ajax(URL+ "agents").then((data) => data = data.data).then((data) => AGENTS(data));
+
+
 function AGENTS(data) {
+    const $fake = $(".fake")
+    const $fakeCard = $(".fakeCard");
     // filter duplicate or error characters
     const filteredData = data.filter(obj => {
         return obj.isPlayableCharacter === true;
     })
     filteredData.map((data) => {
-        // console.log(data.displayName)
-        let uuid = data.uuid;
-        let abilities = data.abilities;
-        // console.log(abilities)
-        const agentCard = `
-            <div id="${uuid}" class="indBox content-Agents hidden">
-            <img src="${data.displayIcon}"/>
-            <h3>${data.displayName}</h3>  
-            </div>`;
-        $selectionCards.append(agentCard);
-        const fullCard = `
-        <div id="${data.displayName}Full" class ="fullCard">
-        <h2>${data.displayName}</h2>
-            <img src ="${data.fullPortrait}"/>
-            <p id="description">${data.description}</p>
-            <h3>Abilities</h3>
-            <div id="abilities">
-                <div title="${abilities[0].description}" id="abilityDescription">
-                    <h5>${abilities[0].displayName}</h5>
-                    <img src ="${abilities[0].displayIcon}"/>
-                    </div>
-                <div title="${abilities[1].description}" id="abilityDescription">
-                    <h5>${abilities[1].displayName}</h5>
-                    <img src ="${abilities[1].displayIcon}""/>
-                    </div>
-                <div title="${abilities[2].description}" id="abilityDescription">
-                    <h5>${abilities[2].displayName}</h5>
-                    <img src ="${abilities[2].displayIcon}"/>
-                    </div>
-                <div title="${abilities[3].description}" id="abilityDescription">
-                    <h5>${abilities[3].displayName}</h5>
-                    <img src ="${abilities[3].displayIcon}"/>
-                    </div>
-            </div>
-        </div>
-        `;
 
-        $(`#${data.uuid}`).on('click', function () {
+        let $uuid = data.uuid;
+        let abilities = data.abilities;
+
+        
+        // DOM Manipulation
+        const $box = $fake.clone(true);
+        const $imgSrc = $box.find('img')
+        const $h3 = $box.find('h3')
+        $box.removeClass("fake")
+        $box.addClass("content-Agents indBox")
+        $box.attr("id", $uuid);
+        $imgSrc.attr("src", `${data.displayIcon}`)
+        $h3.html(`${data.displayName}`)
+        $box.appendTo($selectionCards)
+        // elements of full card
+        const $trueCard = $fakeCard.clone(true);
+        const $h2Full = $trueCard.find('h2');
+        const $cardImg = $trueCard.find('img');
+        const $pFull = $trueCard.find('p')
+        // elements of div Abilities in full card
+        const $divAbility = $trueCard.find('#abilities');
+        const $ability1 = $divAbility.find(".ab1");
+        const $ability2 = $divAbility.find(".ab2");
+        const $ability3 = $divAbility.find(".ab3");
+        const $ability4 = $divAbility.find(".ab4");
+        // add correct content for fullCard 
+        $trueCard.removeClass("fakeCard hidden")
+        $trueCard.addClass("fullCard")
+        $trueCard.attr("id", `${data.displayName}+Full`)
+        $h2Full.html(`${data.displayName}`)
+        $cardImg.attr("src", `${data.fullPortrait}`)
+        $pFull.html(`${data.description}`)
+
+        // content for ability 1
+        $ability1.attr("title", `${abilities[0].description}`)
+        $ability1.find("h5").html(`${abilities[0].displayName}`)
+        $ability1.find("img").attr("src", `${abilities[0].displayIcon}`)
+        // content for ability 2
+        $ability2.attr("title", `${abilities[1].description}`)
+        $ability2.find("h5").html(`${abilities[1].displayName}`)
+        $ability2.find("img").attr("src", `${abilities[1].displayIcon}`)
+        // content for ability 3
+        $ability3.attr("title", `${abilities[2].description}`)
+        $ability3.find("h5").html(`${abilities[2].displayName}`)
+        $ability3.find("img").attr("src", `${abilities[2].displayIcon}`)
+        // content for ability 4
+        $ability4.attr("title", `${abilities[3].description}`)
+        $ability4.find("h5").html(`${abilities[3].displayName}`)
+        $ability4.find("img").attr("src", `${abilities[3].displayIcon}`)
+
+        // when user clicks agent in selection menu a full profile will appear on the right with full info
+        console.log($trueCard)
+        $("#"+ $uuid).on('click', function () {
             // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
             $("#fullAgent").empty();
-            $("#fullAgent").append(fullCard)
+            $trueCard.appendTo($('#fullAgent'))
         })
     });
 
@@ -77,6 +97,7 @@ function MAPS(data) {
     filteredData.map((data) => {
         // console.log(data.displayName)
         let uuid = data.uuid;
+        
         const mapCard = `
                 <div id="${uuid}" class="indBox content-Maps hidden">
                 <img src="${data.displayIcon}"/>
@@ -112,7 +133,7 @@ function WEAPONS(data) {
         // console.log(data.displayName)
         let uuid = data.uuid;
         const weaponCard = `
-                <div id="${uuid}" class="indBox content-Maps hidden">
+                <div id="${uuid}" class="indBox content-Weapons hidden">
                 
                 <h3>${data.displayName}</h3>  
                 </div>`;
