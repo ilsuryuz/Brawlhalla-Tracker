@@ -55,7 +55,7 @@ This website is used as a little WIKI to find out information about characters, 
 * More information like sound clips of Agents and Weapons
 
 ## <a name="deployment"></a>Deployed Link
-[Netlify]()
+[Netlify](https://game-info-project.netlify.app/)
 
 * You can view the repository:
 [Github.com](https://github.com/ilsuryuz/Game-Info)
