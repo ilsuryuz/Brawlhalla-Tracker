@@ -19,6 +19,8 @@ This website is used as a little WIKI to find out information about characters, 
 * HTML5
 * CSS3
 * jQuery
+* AJAX
+* [API](https://dash.valorant-api.com/)
 
 
 ## Features
