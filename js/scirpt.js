@@ -5,7 +5,7 @@ const URL = "https://valorant-api.com/v1/";
 // ref https://stackoverflow.com/questions/18491179/select-different-options-at-an-select-form-and-show-different-content
 $(document).ready(function () {
     $("#options").change(function () {
-        $("#fullAgent").empty();
+        $("#fullCard").empty();
         $(".indBox").addClass("hidden");
         $(".content-" + $(this).val()).removeClass("hidden");
 
@@ -16,45 +16,46 @@ $(document).ready(function () {
 const $selectionCards = $('.selection')
 $.ajax(URL+ "agents").then((data) => data = data.data).then((data) => AGENTS(data));
 
-
+const $fake = $(".fakeBox")
 function AGENTS(data) {
-    const $fake = $(".fake")
-    const $fakeCard = $(".fakeCard");
     // filter duplicate or error characters
     const filteredData = data.filter(obj => {
         return obj.isPlayableCharacter === true;
     })
+    
     filteredData.map((data) => {
-
+        
         let $uuid = data.uuid;
         let abilities = data.abilities;
-
+        
         
         // DOM Manipulation
+        // For choices of agents
         const $box = $fake.clone(true);
         const $imgSrc = $box.find('img')
         const $h3 = $box.find('h3')
-        $box.removeClass("fake")
+        $box.removeClass("fakeBox")
         $box.addClass("content-Agents indBox")
         $box.attr("id", $uuid);
         $imgSrc.attr("src", `${data.displayIcon}`)
         $h3.html(`${data.displayName}`)
         $box.appendTo($selectionCards)
         // elements of full card
-        const $trueCard = $fakeCard.clone(true);
-        const $h2Full = $trueCard.find('h2');
-        const $cardImg = $trueCard.find('img');
-        const $pFull = $trueCard.find('p')
+        const $fakeCardAgent = $(".fakeCardAgent");
+        const $trueCardAgent = $fakeCardAgent.clone(true);
+        const $h2Full = $trueCardAgent.find('h2');
+        const $cardImg = $trueCardAgent.find('img');
+        const $pFull = $trueCardAgent.find('p')
         // elements of div Abilities in full card
-        const $divAbility = $trueCard.find('#abilities');
+        const $divAbility = $trueCardAgent.find('#abilities');
         const $ability1 = $divAbility.find(".ab1");
         const $ability2 = $divAbility.find(".ab2");
         const $ability3 = $divAbility.find(".ab3");
         const $ability4 = $divAbility.find(".ab4");
         // add correct content for fullCard 
-        $trueCard.removeClass("fakeCard hidden")
-        $trueCard.addClass("fullCard")
-        $trueCard.attr("id", `${data.displayName}+Full`)
+        $trueCardAgent.removeClass("fakeCard hidden")
+        $trueCardAgent.addClass("fullCardAgent")
+        $trueCardAgent.attr("id", `${data.displayName}+Full`)
         $h2Full.html(`${data.displayName}`)
         $cardImg.attr("src", `${data.fullPortrait}`)
         $pFull.html(`${data.description}`)
@@ -77,16 +78,18 @@ function AGENTS(data) {
         $ability4.find("img").attr("src", `${abilities[3].displayIcon}`)
 
         // when user clicks agent in selection menu a full profile will appear on the right with full info
-        console.log($trueCard)
+        
         $("#"+ $uuid).on('click', function () {
             // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
-            $("#fullAgent").empty();
-            $trueCard.appendTo($('#fullAgent'))
+            $("#fullCard").empty();
+            $trueCardAgent.appendTo($('#fullCard'))
         })
     });
 
 }
+
+
 
 $.ajax(URL+ "maps").then((data) => data = data.data).then((data) => MAPS(data));
 function MAPS(data) {
@@ -96,27 +99,47 @@ function MAPS(data) {
     })
     filteredData.map((data) => {
         // console.log(data.displayName)
-        let uuid = data.uuid;
-        
-        const mapCard = `
-                <div id="${uuid}" class="indBox content-Maps hidden">
-                <img src="${data.displayIcon}"/>
-                <h3>${data.displayName}</h3>  
-                </div>`;
-        $selectionCards.append(mapCard);
-        const fullCard = `
-            <div id="${data.displayName}Full" class ="fullCard">
-            <h2>${data.displayName}</h2>
-                <img src ="${data.splash}"/>
-                <p id="description">${data.coordinates}</p>
-            </div>
-            `;
+        let $uuid = data.uuid;
+        const $fakeCardMaps = $(".fakeCardMap");
+        // DOM Manipulation
+        // Choices of maps
+        const $box = $fake.clone(true);
+        const $imgSrc = $box.find('img')
+        const $h3 = $box.find('h3')
+        $box.removeClass("fakeBox")
+        $box.addClass("content-Maps indBox")
+        $box.attr("id", $uuid);
+        $imgSrc.attr("src", `${data.displayIcon}`)
+        $h3.html(`${data.displayName}`)
+        $box.appendTo($selectionCards)
+
+        $selectionCards.append($box);
+
+        const $trueCardMap = $fakeCardMaps.clone(true);
+        const $h2Full = $trueCardMap.find('h2');
+        const $cardImg = $trueCardMap.find('img');
+        const $pFull = $trueCardMap.find('p')
+
+        $trueCardMap.removeClass("fakeCardMap hidden")
+        $trueCardMap.addClass("fullCardMap")
+        $trueCardMap.attr("id", `${data.displayName}+Full`)
+        $h2Full.html(`${data.displayName}`)
+        $cardImg.attr("src", `${data.splash}`)
+        $pFull.html(`${data.coordinates}`)
+
+        // const fullCard = `
+        //     <div id="${data.displayName}Full" class ="fullCard">
+        //     <h2>${data.displayName}</h2>
+        //         <img src ="${data.splash}"/>
+        //         <p id="description">${data.coordinates}</p>
+        //     </div>
+        //     `;
 
         $(`#${data.uuid}`).on('click', function () {
             // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
-            $("#fullAgent").empty();
-            $("#fullAgent").append(fullCard)
+            $("#fullCard").empty();
+            $trueCardMap.appendTo($('#fullCard'))
         })
     });
 
@@ -149,8 +172,8 @@ function WEAPONS(data) {
         $(`#${data.uuid}`).on('click', function () {
             // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
-            $("#fullAgent").empty();
-            $("#fullAgent").append(fullCard)
+            $("#fullCard").empty();
+            $("#fullCard").append(fullCard)
         })
     });
 
