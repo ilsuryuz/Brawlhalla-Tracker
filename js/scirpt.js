@@ -14,7 +14,7 @@ $(document).ready(function () {
 
 
 const $selectionCards = $('.selection')
-$.ajax(URL+ "agents").then((data) => data = data.data).then((data) => AGENTS(data));
+$.ajax(URL + "agents").then((data) => data = data.data).then((data) => AGENTS(data));
 
 const $fake = $(".fakeBox")
 function AGENTS(data) {
@@ -22,13 +22,13 @@ function AGENTS(data) {
     const filteredData = data.filter(obj => {
         return obj.isPlayableCharacter === true;
     })
-    
+
     filteredData.map((data) => {
-        
+
         let $uuid = data.uuid;
         let abilities = data.abilities;
-        
-        
+
+
         // DOM Manipulation
         // For choices of agents
         const $box = $fake.clone(true);
@@ -78,9 +78,8 @@ function AGENTS(data) {
         $ability4.find("img").attr("src", `${abilities[3].displayIcon}`)
 
         // when user clicks agent in selection menu a full profile will appear on the right with full info
-        
-        $("#"+ $uuid).on('click', function () {
-            // console.log("works")
+
+        $("#" + $uuid).on('click', function () {
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
             $("#fullCard").empty();
             $trueCardAgent.appendTo($('#fullCard'))
@@ -91,16 +90,15 @@ function AGENTS(data) {
 
 
 
-$.ajax(URL+ "maps").then((data) => data = data.data).then((data) => MAPS(data));
+$.ajax(URL + "maps").then((data) => data = data.data).then((data) => MAPS(data));
 function MAPS(data) {
     // filters "The Range" map so it does not show up, because not an online map
     const filteredData = data.filter(obj => {
         return obj.displayIcon !== null;
     })
     filteredData.map((data) => {
-        // console.log(data.displayName)
         let $uuid = data.uuid;
-        const $fakeCardMaps = $(".fakeCardMap");
+
         // DOM Manipulation
         // Choices of maps
         const $box = $fake.clone(true);
@@ -113,8 +111,8 @@ function MAPS(data) {
         $h3.html(`${data.displayName}`)
         $box.appendTo($selectionCards)
 
-        $selectionCards.append($box);
-
+        // full description of maps
+        const $fakeCardMaps = $(".fakeCardMap");
         const $trueCardMap = $fakeCardMaps.clone(true);
         const $h2Full = $trueCardMap.find('h2');
         const $cardImg = $trueCardMap.find('img');
@@ -126,17 +124,7 @@ function MAPS(data) {
         $h2Full.html(`${data.displayName}`)
         $cardImg.attr("src", `${data.splash}`)
         $pFull.html(`${data.coordinates}`)
-
-        // const fullCard = `
-        //     <div id="${data.displayName}Full" class ="fullCard">
-        //     <h2>${data.displayName}</h2>
-        //         <img src ="${data.splash}"/>
-        //         <p id="description">${data.coordinates}</p>
-        //     </div>
-        //     `;
-
         $(`#${data.uuid}`).on('click', function () {
-            // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
             $("#fullCard").empty();
             $trueCardMap.appendTo($('#fullCard'))
@@ -146,34 +134,40 @@ function MAPS(data) {
 }
 
 
-$.ajax(URL+ "weapons").then((data) => data = data.data).then((data) => WEAPONS(data));
+$.ajax(URL + "weapons")
+    .then((data) => data = data.data)
+    .then((data) => WEAPONS(data));
 function WEAPONS(data) {
-    // filters "The Range" map so it does not show up, because not an online map
-    // const filteredData = data.filter(obj => {
-    //     return obj.displayIcon !== null;
-    // })
-    data.map((data) => {
-        // console.log(data.displayName)
-        let uuid = data.uuid;
-        const weaponCard = `
-                <div id="${uuid}" class="indBox content-Weapons hidden">
-                
-                <h3>${data.displayName}</h3>  
-                </div>`;
-        $selectionCards.append(weaponCard);
-        const fullCard = `
-            <div id="${data.displayName}Full" class ="fullCard">
-            <h2>${data.displayName}</h2>
-                <img src ="${data.displayIcon}"/>
-                <p id="description">${data.coordinates}</p>
-            </div>
-            `;
+
+    data.map((data, index) => {
+        //Dom Manipulation for Weapons
+
+        let $uuid = data.uuid;
+        const $box = $fake.clone(true);
+        // const $imgSrc = $box.find('img')
+        const $h3 = $box.find('h3')
+        $box.removeClass("fakeBox")
+        $box.addClass("content-Weapons indBox")
+        $box.attr("id", $uuid);
+        // $imgSrc.attr("src", `${data.killStreamIcon}`)
+        $h3.html(`${data.displayName}`)
+        $box.appendTo($selectionCards)
+
+        const $fakeCardWeapon = $(".fakeCardWeapon");
+        const $trueCardWeapon = $fakeCardWeapon.clone(true);
+        const $h2Full = $trueCardWeapon.find('h2');
+        const $cardImg = $trueCardWeapon.find('img');
+        // full card for weapons
+        $trueCardWeapon.removeClass("fakeCardWeapon hidden")
+        $trueCardWeapon.addClass("fullCardWeapon")
+        $trueCardWeapon.attr("id", `${data.displayName}+Full`)
+        $h2Full.html(`${data.displayName}`)
+        $cardImg.attr("src", `${data.displayIcon}`)
 
         $(`#${data.uuid}`).on('click', function () {
-            // console.log("works")
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
             $("#fullCard").empty();
-            $("#fullCard").append(fullCard)
+            $trueCardWeapon.appendTo($('#fullCard'))
         })
     });
 
