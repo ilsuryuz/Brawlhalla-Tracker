@@ -133,7 +133,7 @@ function MAPS(data) {
 
 }
 
-
+// const $optionSkin = $('#skinList');
 $.ajax(URL + "weapons")
     .then((data) => data = data.data)
     .then((data) => WEAPONS(data));
@@ -141,7 +141,6 @@ function WEAPONS(data) {
 
     data.map((data, index) => {
         //Dom Manipulation for Weapons
-
         let $uuid = data.uuid;
         const $box = $fake.clone(true);
         // const $imgSrc = $box.find('img')
@@ -157,12 +156,38 @@ function WEAPONS(data) {
         const $trueCardWeapon = $fakeCardWeapon.clone(true);
         const $h2Full = $trueCardWeapon.find('h2');
         const $cardImg = $trueCardWeapon.find('img');
+        // const $trueSkin = $trueCardWeapon.find('#skins')
         // full card for weapons
         $trueCardWeapon.removeClass("fakeCardWeapon hidden")
         $trueCardWeapon.addClass("fullCardWeapon")
         $trueCardWeapon.attr("id", `${data.displayName}+Full`)
         $h2Full.html(`${data.displayName}`)
         $cardImg.attr("src", `${data.displayIcon}`)
+        
+        
+
+            // tried adding skins
+            // const length = data.skins.length;
+            // const skins = data.skins;
+            // skins.map((data) => {
+            //     $("#skins").change(function () {
+            //         var thisval = $(this).val();
+            //         if (thisval == `${data.uuid}`) {
+            //             $cardImg.attr("src", `${data.displayIcon}`)
+            //         } else {
+            //             $cardImg.attr("src", `${data.displayIcon}`)
+            //         }
+            //       });
+            //     const $skinListOpt = $optionSkin.clone(true);
+            //     $skinListOpt.attr("value", `${data.uuid}`)
+            //     $skinListOpt.html(data.displayName);
+            //     $skinListOpt.appendTo($trueSkin);
+            // })
+            // $skinListOpt.html(`${data.skins[i].displayName}`)
+            // $skinListOpt.appendTo("#skins");
+
+
+            
 
         $(`#${data.uuid}`).on('click', function () {
             // research .empty() function ref: https://www.w3schools.com/jquery/html_empty.asp#:~:text=The%20empty()%20method%20removes,use%20the%20remove()%20method.
