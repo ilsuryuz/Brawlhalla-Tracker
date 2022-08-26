@@ -37,7 +37,7 @@ This website is used as a little WIKI to find out information about characters, 
 * Agent full information section
     <img src="./images/agentFullInfo.png" alt="agentFullInfo"/>
 * Agent ability descritpion
-    <img src="./images/Project.gi" alt="abilityDesc"/>
+    <img src="./images/Project.gif" alt="abilityDesc"/>
 
 
 ## Planning
